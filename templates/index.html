@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SL ASSESSORIA EMPRESARIAL</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <header>
+        <div class="logo">SL ASSESSORIA EMPRESARIAL</div>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('clientes') }}">Clientes</a></li>
+                <li><a href="{{ url_for('recibos') }}">Recibos</a></li>
+                <li><a href="{{ url_for('contato') }}">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="welcome">
+        <h1>Bem-vindo à SL ASSESSORIA EMPRESARIAL</h1>
+        <p>Oferecemos serviços contábeis de alta qualidade para sua empresa, com profissionalismo e confiança.</p>
+    </section>
+
+    <section class="services">
+        <h2>Nossos Serviços</h2>
+        <ul>
+            <li>Consultoria Fiscal</li>
+            <li>Gestão Contábil</li>
+            <li>Planejamento Tributário</li>
+            <li>Auditoria Interna</li>
+        </ul>
+    </section>
+
+    <footer>
+        <p>© Francisco Everton Rabelo. Todos os direitos reservados.</p>
+        <p>Contato: (XX) XXXX-XXXX | xxxxxx@xx.com</p>
+    </footer>
+</body>
+</html>

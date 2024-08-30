@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clientes</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="logo">SL ASSESSORIA EMPRESARIAL</div>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('clientes') }}">Clientes</a></li>
+                <li><a href="{{ url_for('recibos') }}">Recibos</a></li>
+                <li><a href="{{ url_for('contato') }}">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Lista de Clientes</h1>
+        <button id="btnOpenModal" class="btn">Cadastrar Cliente</button>
+
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>CNPJ</th>
+                    <th>Razão Social</th>
+                    <th>Nome Fantasia</th>
+                    <th>Email</th>
+                    <th>Telefone</th>
+                    <th>Logradouro</th>
+                    <th>Número</th>
+                    <th>Complemento</th>
+                    <th>Bairro</th>
+                    <th>Município</th>
+                    <th>UF</th>
+                    <th>CEP</th>
+                    <th>Ações</th> <!-- Coluna de Ações -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for cliente in clientes %}
+                <tr>
+                    <td>{{ cliente.id }}</td>
+                    <td>{{ cliente.cnpj }}</td>
+                    <td>{{ cliente.razao_social }}</td>
+                    <td>{{ cliente.nome_fantasia }}</td>
+                    <td>{{ cliente.email }}</td>
+                    <td>{{ cliente.telefone }}</td>
+                    <td>{{ cliente.logradouro }}</td>
+                    <td>{{ cliente.numero }}</td>
+                    <td>{{ cliente.complemento }}</td>
+                    <td>{{ cliente.bairro }}</td>
+                    <td>{{ cliente.municipio }}</td>
+                    <td>{{ cliente.uf }}</td>
+                    <td>{{ cliente.cep }}</td>
+                    <td>
+                        <!-- Botão Editar -->
+                        <button class="btn btn-edit" data-id="{{ cliente.id }}" data-toggle="modal" data-target="#editModal">Editar</button>
+                        
+                        <!-- Botão Excluir -->
+                        <form action="{{ url_for('delete_cliente', id=cliente.id) }}" method="post" style="display:inline;">
+                            <button type="submit" class="btn btn-delete">Excluir</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>        
+    </main>
+
+<!-- Modal de Adicionar Cliente Atualizado -->
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <span id="closeModal" class="close">&times;</span>
+        <h2>Cadastrar Cliente</h2>
+        <form id="formAddCliente" action="{{ url_for('add_cliente') }}" method="post">
+            <label for="cnpj">CNPJ:</label>
+            <input type="text" id="cnpj" name="cnpj" required>
+
+            <label for="razao_social">Razão Social:</label>
+            <input type="text" id="razao_social" name="razao_social" required>
+
+            <label for="nome_fantasia">Nome Fantasia:</label>
+            <input type="text" id="nome_fantasia" name="nome_fantasia">
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email">
+
+            <label for="telefone">Telefone:</label>
+            <input type="text" id="telefone" name="telefone">
+
+            <label for="logradouro">Logradouro:</label>
+            <input type="text" id="logradouro" name="logradouro">
+
+            <label for="numero">Número:</label>
+            <input type="text" id="numero" name="numero">
+
+            <label for="complemento">Complemento:</label>
+            <input type="text" id="complemento" name="complemento">
+
+            <label for="bairro">Bairro:</label>
+            <input type="text" id="bairro" name="bairro">
+
+            <label for="municipio">Município:</label>
+            <input type="text" id="municipio" name="municipio">
+
+            <label for="uf">UF:</label>
+            <input type="text" id="uf" name="uf">
+
+            <label for="cep">CEP:</label>
+            <input type="text" id="cep" name="cep">
+
+            <button type="submit" class="btn">Cadastrar</button>
+        </form>
+    </div>
+</div>
+
+<!-- Modal de Editar Cliente -->
+<div id="editModal" class="modal">
+    <div class="modal-content">
+        <span id="closeEditModal" class="close">&times;</span>
+        <h2>Editar Cliente</h2>
+        <form id="formEditCliente" action="" method="post">
+            <input type="hidden" id="edit_id" name="id">
+
+            <label for="edit_cnpj">CNPJ:</label>
+            <input type="text" id="edit_cnpj" name="cnpj" required>
+
+            <label for="edit_razao_social">Razão Social:</label>
+            <input type="text" id="edit_razao_social" name="razao_social" required>
+
+            <label for="edit_nome_fantasia">Nome Fantasia:</label>
+            <input type="text" id="edit_nome_fantasia" name="nome_fantasia">
+
+            <label for="edit_email">Email:</label>
+            <input type="email" id="edit_email" name="email">
+
+            <label for="edit_telefone">Telefone:</label>
+            <input type="text" id="edit_telefone" name="telefone">
+
+            <label for="edit_logradouro">Logradouro:</label>
+            <input type="text" id="edit_logradouro" name="logradouro">
+
+            <label for="edit_numero">Número:</label>
+            <input type="text" id="edit_numero" name="numero">
+
+            <label for="edit_complemento">Complemento:</label>
+            <input type="text" id="edit_complemento" name="complemento">
+
+            <label for="edit_bairro">Bairro:</label>
+            <input type="text" id="edit_bairro" name="bairro">
+
+            <label for="edit_municipio">Município:</label>
+            <input type="text" id="edit_municipio" name="municipio">
+
+            <label for="edit_uf">UF:</label>
+            <input type="text" id="edit_uf" name="uf">
+
+            <label for="edit_cep">CEP:</label>
+            <input type="text" id="edit_cep" name="cep">
+
+            <button type="submit" class="btn">Salvar Alterações</button>
+        </form>
+    </div>
+</div>
+
+    <footer>
+        <p>© Francisco Everto Rabelo. Todos os direitos reservados.</p>
+        <p>Contato: (XX) XXXX-XXXX | contato@slessessoria.com</p>
+    </footer>
+
+    <script>
+        // Modal adicionar
+        var modal = document.getElementById("modal");
+        var btn = document.getElementById("btnOpenModal");
+        var span = document.getElementById("closeModal");
+
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        // Script para fazer a chamada à API e preencher o formulário
+        document.getElementById('cnpj').addEventListener('change', function() {
+            let cnpj = this.value;
+            fetch(`https://api.invertexto.com/v1/cnpj/${cnpj}?token=15158|CReshPRmmuMYkSDArod6UX83JifNCVmQ`)
+                .then(response => response.json())
+            .then(data => {
+            // Verifique se o campo existe antes de atribuir
+            document.getElementById('razao_social').value = data.razao_social || '';
+            document.getElementById('nome_fantasia').value = data.nome_fantasia || '';
+            document.getElementById('email').value = data.email || '';
+            document.getElementById('telefone').value = data.telefone1 || '';  // Use telefone1
+            document.getElementById('logradouro').value = data.endereco.logradouro || '';
+            document.getElementById('numero').value = data.endereco.numero || '';
+            document.getElementById('complemento').value = data.endereco.complemento || '';
+            document.getElementById('bairro').value = data.endereco.bairro || '';
+            document.getElementById('municipio').value = data.endereco.municipio || '';
+            document.getElementById('uf').value = data.endereco.uf || '';
+            document.getElementById('cep').value = data.endereco.cep || '';
+        })
+        .catch(error => {
+            console.error('Erro ao buscar dados do CNPJ:', error);
+        });
+});
+    </script>
+</body>
+</html>
